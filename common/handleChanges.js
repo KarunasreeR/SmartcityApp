@@ -1,3 +1,4 @@
+const { timeStamp } = require("console");
 const SensorData = require("../models/sensorData");
 const { sendToThingsBoard } = require("./commonFunctions");
 const { parkingUrl } = require("./thingsBoardUrls");
@@ -13,13 +14,26 @@ const handleParkingChange = async (parkingData = null) => {
       return;
     }
 
-    const { available, faulty_sensors, reserved, occupied } = latestParking;
-
-    await sendToThingsBoard(parkingUrl, {
+    const {
       available,
+      device_id,
+      device_name,
+      timestamp,
       faulty_sensors,
       reserved,
       occupied,
+      total,
+    } = latestParking;
+
+    await sendToThingsBoard(parkingUrl, {
+      available,
+      faultySensors: faulty_sensors,
+      reserved,
+      occupied,
+      deviceName: device_name,
+      timeStamp: timestamp,
+      deviceId: device_id,
+      total,
     });
 
     console.log("Parking data successfully sent to ThingsBoard.");
