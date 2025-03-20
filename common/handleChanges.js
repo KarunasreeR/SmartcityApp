@@ -4,8 +4,6 @@ const { sendToThingsBoard } = require("./commonFunctions");
 const { parkingUrl } = require("./thingsBoardUrls");
 
 const handleParkingChange = async (parkingData = null) => {
-  console.log("Handling Parking Change:", parkingData);
-
   try {
     const latestParking = await SensorData.findOne({ order: [["id", "DESC"]] });
 
@@ -35,8 +33,6 @@ const handleParkingChange = async (parkingData = null) => {
       deviceId: device_id,
       total,
     });
-
-    console.log("Parking data successfully sent to ThingsBoard.");
   } catch (err) {
     console.error("Error handling parking change:", err);
   }

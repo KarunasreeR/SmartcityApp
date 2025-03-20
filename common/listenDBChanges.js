@@ -22,7 +22,6 @@ const listenToDb = async () => {
     client.query("LISTEN parking_changes");
 
     client.on("notification", async (msg) => {
-      console.log("sensor-data Table Updated:", JSON.parse(msg.payload));
       await handleParkingChange(JSON.parse(msg.payload));
     });
   } catch (err) {
