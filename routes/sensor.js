@@ -10,7 +10,7 @@ router.post("/parking", async (req, res) => {
     const occupied = Math.floor(Math.random() * (100 - available));
     const reserved = Math.floor(Math.random() * (100 - available - occupied));
     const faulty_sensors = 100 - (available + occupied + reserved);
-    const total = available + occupied + reserved + faultySensors;
+    const total = available + occupied + reserved + faulty_sensors;
     const timestamp = new Date(); // Current timestamp
     const device_name = "parking-sensor";
 
