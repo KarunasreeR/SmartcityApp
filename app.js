@@ -9,7 +9,8 @@ const indexRouter = require("./routes/index");
 const { listenToDb } = require("./common/listenDBChanges");
 
 const app = express();
-
+const cors = require("cors");
+app.use(cors({ origin: "https://thingsboard.cloud" }));
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
