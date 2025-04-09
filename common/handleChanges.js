@@ -1,5 +1,5 @@
 const { sendToThingsBoard } = require("./commonFunctions");
-const { parkingUrl, soundSensorUrl } = require("./thingsBoardUrls");
+const thingsBoardUrls = require("./thingsBoardUrls");
 const { decodeUplink } = require("./decode");
 const { Device, Uplink, UplinkMetadata, SensorData } = require("../models");
 
@@ -42,26 +42,85 @@ const handleSensorData = async (msg) => {
   try {
     const latestUplink = msg;
     const device = await Device.findOne({
-      where: { id: latestUplink.WirelessDeviceId },
+      where: { id: latestUplink.device_id },
     });
     const decodedBytes = Buffer.from(latestUplink.raw_payload, "base64");
     const result = decodeUplink({ bytes: [...decodedBytes] });
 
     let thingsBoardPayload, sensorUrl;
-    if (device.device_name === "District Sound Sensor") {
-      sensorUrl = soundSensorUrl;
-      thingsBoardPayload = {
-        battery: result.data.battery,
-        LAI: result.data.LAI,
-        LAeq: result.data.LAeq,
-        LAImax: result.data.LAImax,
-      };
+    switch (device.device_type) {
+      case "Sound":
+        sensorUrl = thingsBoardUrls.soundSensorUrl;
+        thingsBoardPayload = {
+          battery: result.data.battery,
+          LAI: result.data.LAI,
+          LAeq: result.data.LAeq,
+          LAImax: result.data.LAImax,
+        };
+        break;
+      case "Small People":
+        sensorUrl = thingsBoardUrls.smallPeopleSensorUrl;
+        thingsBoardPayload = {
+          battery: result.data.battery,
+          LAI: result.data.LAI,
+          LAeq: result.data.LAeq,
+          LAImax: result.data.LAImax,
+        };
+        break;
+      case "Large People":
+        sensorUrl = thingsBoardUrls.largePeopleSensorUrl;
+        thingsBoardPayload = {
+          battery: result.data.battery,
+          LAI: result.data.LAI,
+          LAeq: result.data.LAeq,
+          LAImax: result.data.LAImax,
+        };
+        break;
+      case "R718B151":
+        sensorUrl = thingsBoardUrls.temperatureSensorUrl;
+        thingsBoardPayload = {
+          battery: result.data.battery,
+          LAI: result.data.LAI,
+          LAeq: result.data.LAeq,
+          LAImax: result.data.LAImax,
+        };
+        break;
+      case "R719A":
+        sensorUrl = thingsBoardUrls.SurfaceMountedParkingsensorUrl;
+        thingsBoardPayload = {
+          battery: result.data.battery,
+          LAI: result.data.LAI,
+          LAeq: result.data.LAeq,
+          LAImax: result.data.LAImax,
+        };
+        break;
+      case "R718LB":
+        sensorUrl = thingsBoardUrls.HallEffectSensorUrl;
+        thingsBoardPayload = {
+          battery: result.data.battery,
+          LAI: result.data.LAI,
+          LAeq: result.data.LAeq,
+          LAImax: result.data.LAImax,
+        };
+        break;
+      case "R712":
+        sensorUrl = thingsBoardUrls.temperatureAndHumididtySensorUrl;
+        thingsBoardPayload = {
+          battery: result.data.battery,
+          LAI: result.data.LAI,
+          LAeq: result.data.LAeq,
+          LAImax: result.data.LAImax,
+        };
+        break;
+      default:
+        console.error("Unknown device type:", device.device_type);
+        break;
     }
+
     // sending data to things board
     await sendToThingsBoard(sensorUrl, thingsBoardPayload);
   } catch (error) {
     console.log(error);
-    throw error;
   }
 };
 

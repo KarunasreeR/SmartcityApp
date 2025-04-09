@@ -15,7 +15,6 @@ function decode(fPort, bytes) {
 }
 
 function milesightDeviceDecode(bytes) {
-  console.log(bytes);
   let decoded = {};
   let i = 0;
 
@@ -77,25 +76,5 @@ function readInt16LE(bytes) {
 function readLoRaWANClass(type) {
   return ["ClassA", "ClassB", "ClassC", "ClassCtoB"][type] || "Unknown";
 }
-
-const input = {
-  MessageId: "a10376a7-a9b5-4126-b60f-8db73fbd6643",
-  WirelessDeviceId: "1e4b7984-d7d0-4ff5-8790-32a4c8bb35a3",
-  PayloadData: "AXVjBVsBjQIZApIC",
-  WirelessMetadata: {
-    LoRaWAN: {
-      FCnt: 114,
-      FPort: 85,
-    },
-  },
-};
-
-// Convert Base64 PayloadData to bytes array
-const decodedBytes = Buffer.from(input.PayloadData, "base64");
-console.log(decodedBytes);
-// Call the decode function
-const result = decodeUplink({ bytes: [...decodedBytes] });
-
-console.log(result);
 
 module.exports = { decodeUplink, decode, milesightDeviceDecode };
