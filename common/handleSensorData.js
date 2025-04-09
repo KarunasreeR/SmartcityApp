@@ -52,7 +52,7 @@ const handleSensorData = async () => {
 
     // Ensure device exists (you can skip this if already populated)
     await Device.findOrCreate({
-      where: { id: deviceId },
+      where: { device_id: deviceId },
       defaults: {
         device_id: deviceId,
       },
@@ -72,7 +72,7 @@ const handleSensorData = async () => {
       fcnt: input.WirelessMetadata.LoRaWAN.FCnt,
       fport: input.WirelessMetadata.LoRaWAN.FPort,
     });
-    
+
     // sending data to things board
     const soundSensorUrl = "http://thingsboard.cloud/api/v1/ki3MRBHKZXCHlhlUFbOc/telemetry"
     
