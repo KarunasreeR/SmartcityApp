@@ -1,7 +1,7 @@
-const { timeStamp } = require("console");
-const SensorData = require("../models/sensorData");
 const { sendToThingsBoard } = require("./commonFunctions");
-const { parkingUrl } = require("./thingsBoardUrls");
+const { parkingUrl, soundSensorUrl } = require("./thingsBoardUrls");
+const { decodeUplink } = require("./decode");
+const { Device, Uplink, UplinkMetadata, SensorData } = require("../models");
 
 const handleParkingChange = async (parkingData = null) => {
   try {
@@ -38,4 +38,31 @@ const handleParkingChange = async (parkingData = null) => {
   }
 };
 
-module.exports = { handleParkingChange };
+const handleSensorData = async (msg) => {
+  try {
+    const latestUplink = msg;
+    const device = await Device.findOne({
+      where: { id: latestUplink.WirelessDeviceId },
+    });
+    const decodedBytes = Buffer.from(latestUplink.raw_payload, "base64");
+    const result = decodeUplink({ bytes: [...decodedBytes] });
+
+    let thingsBoardPayload, sensorUrl;
+    if (device.device_name === "District Sound Sensor") {
+      sensorUrl = soundSensorUrl;
+      thingsBoardPayload = {
+        battery: result.data.battery,
+        LAI: result.data.LAI,
+        LAeq: result.data.LAeq,
+        LAImax: result.data.LAImax,
+      };
+    }
+    // sending data to things board
+    await sendToThingsBoard(sensorUrl, thingsBoardPayload);
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+module.exports = { handleParkingChange, handleSensorData };

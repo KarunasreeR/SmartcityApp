@@ -1,5 +1,5 @@
 const { Client } = require("pg");
-const { handleParkingChange } = require("./handleChanges");
+const { handleSensorData } = require("./handleChanges");
 require("dotenv").config();
 
 const listenToDb = async () => {
@@ -16,13 +16,10 @@ const listenToDb = async () => {
     await client.connect();
     console.log("Listening for PostgreSQL changes...");
 
-    // Initial update to thingsboard when server started
-    await handleParkingChange();
-
-    client.query("LISTEN parking_changes");
+    client.query("LISTEN uplink_changes");
 
     client.on("notification", async (msg) => {
-      await handleParkingChange(JSON.parse(msg.payload));
+      await handleSensorData(JSON.parse(msg.payload));
     });
   } catch (err) {
     console.error("Connection error:", err);
