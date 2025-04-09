@@ -25,7 +25,7 @@ module.exports = {
 
   down: async (queryInterface, Sequelize) => {
     await queryInterface.sequelize.query(`
-      DROP TRIGGER IF EXISTS parking_changes_trigger ON "uplinks";
+      DROP TRIGGER IF EXISTS uplink_changes_trigger ON "uplinks";
     `);
 
     await queryInterface.sequelize.query(`
