@@ -45,16 +45,17 @@ const handleSensorData = async () => {
     console.log(decodedBytes);
     // Call the decode function
     const result = decodeUplink({ bytes: [...decodedBytes] });
+    console.log(result);
 
     // store result in tables
 
     const deviceId = input.WirelessDeviceId;
 
-    // Ensure device exists (you can skip this if already populated)
+    // Ensure device exists
     await Device.findOrCreate({
-      where: { device_id: deviceId },
+      where: { id: deviceId },
       defaults: {
-        device_id: deviceId,
+        id: deviceId,
       },
     });
 
@@ -82,9 +83,7 @@ const handleSensorData = async () => {
       LAeq: result.data.LAeq,
       LAImax: result.data.LAImax
     });
-     
-    console.log(result);     
-     
+          
   } catch (error) {
     console.log(error)
     throw error

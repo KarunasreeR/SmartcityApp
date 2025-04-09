@@ -8,10 +8,6 @@ module.exports = {
         primaryKey: true,
         allowNull: false
       },
-      device_id: {
-        type: Sequelize.STRING(255),
-        allowNull: false
-      },
       device_name: {
         type: Sequelize.STRING(255),
         allowNull: false

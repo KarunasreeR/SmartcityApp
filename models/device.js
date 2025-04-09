@@ -7,9 +7,6 @@ const Device = sequelize.define('Device', {
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true
   },
-  device_id: {
-    type: DataTypes.STRING,
-  },
   device_name: {
     type: DataTypes.STRING,
     allowNull: false
