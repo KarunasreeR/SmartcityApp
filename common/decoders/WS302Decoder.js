@@ -77,4 +77,4 @@ function readLoRaWANClass(type) {
   return ["ClassA", "ClassB", "ClassC", "ClassCtoB"][type] || "Unknown";
 }
 
-module.exports = { decodeUplink, decode, milesightDeviceDecode };
+module.exports = { decodeUplink };

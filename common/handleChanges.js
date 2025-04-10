@@ -1,7 +1,8 @@
-const { sendToThingsBoard } = require("./commonFunctions");
+const { sendToThingsBoard, sendTriggerMessage } = require("./commonFunctions");
 const thingsBoardUrls = require("./thingsBoardUrls");
-const { decodeUplink } = require("./decode");
 const { Device, Uplink, UplinkMetadata, SensorData } = require("../models");
+const soundSersorDecoder = require("./decoders/WS302Decoder");
+const smallPeopleSersorDecoder = require("./decoders/VS351Decoder");
 
 const handleParkingChange = async (parkingData = null) => {
   try {
@@ -38,18 +39,19 @@ const handleParkingChange = async (parkingData = null) => {
   }
 };
 
-const handleSensorData = async (msg) => {
+const handleSensorData = async (latestUplink) => {
   try {
-    const latestUplink = msg;
     const device = await Device.findOne({
       where: { id: latestUplink.device_id },
     });
-    const decodedBytes = Buffer.from(latestUplink.raw_payload, "base64");
-    const result = decodeUplink({ bytes: [...decodedBytes] });
+    let decodedBytes = Buffer.from(latestUplink.raw_payload, "base64");
 
-    let thingsBoardPayload, sensorUrl;
+    let thingsBoardPayload, sensorUrl, result;
     switch (device.device_type) {
       case "Sound":
+        result = soundSersorDecoder.decodeUplink({
+          bytes: [...decodedBytes],
+        });
         sensorUrl = thingsBoardUrls.soundSensorUrl;
         thingsBoardPayload = {
           battery: result.data.battery,
@@ -57,14 +59,38 @@ const handleSensorData = async (msg) => {
           LAeq: result.data.LAeq,
           LAImax: result.data.LAImax,
         };
+        const currentDate = new Date();
+        const currentHour = currentDate.getHours();
+        let msg;
+        // if (result.data.LAeq >= 140 && result.data.LAeq <= 190)
+        if (thingsBoardPayload.LAeq >= 140 && thingsBoardPayload.LAeq <= 190) {
+          msg =
+            "Alert! Possible gunshot detected. Sound level between 140-190 dB. Immediate attention required in the area.";
+          await sendTriggerMessage(msg, "+916304807441");
+        }
+        if (
+          currentHour <= 20 &&
+          thingsBoardPayload.LAeq >= 90 &&
+          thingsBoardPayload.LAeq <= 120
+        ) {
+          msg =
+            "Notice: Sound level detected between 90-120 dB after 8PM. The music at the District during events may be too loud. Please assess and adjust if necessary.";
+          await sendTriggerMessage(msg, "+916304807441");
+        }
+
         break;
       case "Small People":
+        result = smallPeopleSersorDecoder.decodeUplink({
+          bytes: [...decodedBytes],
+        });
         sensorUrl = thingsBoardUrls.smallPeopleSensorUrl;
         thingsBoardPayload = {
+          total_in: result.data.total_in,
+          total_out: result.data.total_out,
+          temperature: result.data.temperature,
+          period_in: result.data.period_in,
+          period_out: result.data.period_out,
           battery: result.data.battery,
-          LAI: result.data.LAI,
-          LAeq: result.data.LAeq,
-          LAImax: result.data.LAImax,
         };
         break;
       case "Large People":
