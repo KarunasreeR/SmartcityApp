@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        color: #333;
+      }
+      .container {
+        width: 100%;
+        max-width: 600px;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+      }
+      .header {
+        background-color: #004085;
+        color: #ffffff;
+        padding: 10px;
+        text-align: center;
+        font-size: 18px;
+        font-weight: bold;
+        border-radius: 8px 8px 0 0;
+      }
+      .content {
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 0 0 8px 8px;
+      }
+      .footer {
+        margin-top: 20px;
+        font-size: 12px;
+        color: #666;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">Noise Level Alert 🚨</div>
+      <div class="content">
+        <p>Dear <strong>{{recipientName}}</strong>,</p>
+        <p>
+          We have detected a noise level of <strong>90-120 dB</strong> in
+          <strong>Morro City</strong> after <strong>8 PM</strong>. The music
+          being played at <strong>The District</strong> during events may be too
+          loud.
+        </p>
+        <p>
+          Please review the situation and take necessary measures to ensure
+          compliance with sound regulations.
+        </p>
+        <p>
+          If you have any questions or need further details, feel free to reach
+          out.
+        </p>
+        <p>Best regards,</p>
+        <p>
+          <strong>{{senderName}}</strong>
+        </p>
+      </div>
+      <div class="footer">
+        This is an automated alert from the monitoring system. Please do not
+        reply to this email.
+      </div>
+    </div>
+  </body>
+</html>

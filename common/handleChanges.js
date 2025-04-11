@@ -1,8 +1,13 @@
-const { sendToThingsBoard, sendTriggerMessage } = require("./commonFunctions");
+const {
+  sendToThingsBoard,
+  sendTriggerMessage,
+  sendAlertEmail,
+} = require("./commonFunctions");
 const thingsBoardUrls = require("./thingsBoardUrls");
 const { Device, Uplink, UplinkMetadata, SensorData } = require("../models");
 const soundSersorDecoder = require("./decoders/WS302Decoder");
 const smallPeopleSersorDecoder = require("./decoders/VS351Decoder");
+const largePeopleSersorDecoder = require("./decoders/VS350Decoder");
 
 const handleParkingChange = async (parkingData = null) => {
   try {
@@ -54,10 +59,18 @@ const handleSensorData = async (latestUplink) => {
         });
         sensorUrl = thingsBoardUrls.soundSensorUrl;
         thingsBoardPayload = {
-          battery: result.data.battery,
-          LAI: result.data.LAI,
-          LAeq: result.data.LAeq,
-          LAImax: result.data.LAImax,
+          // battery: result.data.battery,
+          // LAI: result.data.LAI,
+          // LAeq: result.data.LAeq,
+          // LAImax: result.data.LAImax,
+          battery: Math.random(1, 90) * 200,
+          LAI: Math.random(1, 90) * 200,
+          LAeq: Math.random(1, 90) * 200,
+          LAImax: Math.random(1, 90) * 200,
+          latitude: 40.73061,
+          longitude: -73.935242,
+          lat: 27.1739,
+          lon: 78.0421,
         };
         const currentDate = new Date();
         const currentHour = currentDate.getHours();
@@ -66,7 +79,12 @@ const handleSensorData = async (latestUplink) => {
         if (thingsBoardPayload.LAeq >= 140 && thingsBoardPayload.LAeq <= 190) {
           msg =
             "Alert! Possible gunshot detected. Sound level between 140-190 dB. Immediate attention required in the area.";
-          await sendTriggerMessage(msg, "+916304807441");
+          // await sendTriggerMessage(msg, "+916304807441");
+          await sendAlertEmail(
+            "karuna1350@gmail.com",
+            "Urgent: Possible Gunshot Detection in Morrow City 🚨",
+            "gunshotDetected"
+          );
         }
         if (
           currentHour <= 20 &&
@@ -75,7 +93,12 @@ const handleSensorData = async (latestUplink) => {
         ) {
           msg =
             "Notice: Sound level detected between 90-120 dB after 8PM. The music at the District during events may be too loud. Please assess and adjust if necessary.";
-          await sendTriggerMessage(msg, "+916304807441");
+          // await sendTriggerMessage(msg, "+916304807441");
+          await sendAlertEmail(
+            "karuna1350@gmail.com",
+            "Noise Level Alert: High Sound Detected in Morro City After 8 PM",
+            "loudNoiseAtNight"
+          );
         }
 
         break;
@@ -85,21 +108,31 @@ const handleSensorData = async (latestUplink) => {
         });
         sensorUrl = thingsBoardUrls.smallPeopleSensorUrl;
         thingsBoardPayload = {
-          total_in: result.data.total_in,
-          total_out: result.data.total_out,
-          temperature: result.data.temperature,
-          period_in: result.data.period_in,
-          period_out: result.data.period_out,
-          battery: result.data.battery,
+          // total_in: result.data.total_in,
+          // total_out: result.data.total_out,
+          // temperature: result.data.temperature,
+          // period_in: result.data.period_in,
+          // period_out: result.data.period_out,
+          // battery: result.data.battery,
+          total_in: Math.floor(Math.random() * 90 + 1),
+          total_out: Math.floor(Math.random() * 90 + 1),
+          temperature: Math.floor(Math.random() * 90 + 1),
+          period_in: Math.floor(Math.random() * 90 + 1),
+          period_out: Math.floor(Math.random() * 90 + 1),
+          battery: 99,
+          latitude: 42.3601,
+          longitude: -71.0589,
         };
         break;
       case "Large People":
+        result = largePeopleSersorDecoder.decodeUplink({
+          bytes: [...decodedBytes],
+        });
         sensorUrl = thingsBoardUrls.largePeopleSensorUrl;
         thingsBoardPayload = {
-          battery: result.data.battery,
-          LAI: result.data.LAI,
-          LAeq: result.data.LAeq,
-          LAImax: result.data.LAImax,
+          ipso_version: result.data.ipso_version,
+          sn: result.data.sn,
+          hardware_version: result.data.hardware_version,
         };
         break;
       case "R718B151":
