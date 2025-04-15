@@ -59,18 +59,16 @@ const handleSensorData = async (latestUplink) => {
         });
         sensorUrl = thingsBoardUrls.soundSensorUrl;
         thingsBoardPayload = {
-          // battery: result.data.battery,
-          // LAI: result.data.LAI,
-          // LAeq: result.data.LAeq,
-          // LAImax: result.data.LAImax,
-          battery: Math.random(1, 90) * 200,
-          LAI: Math.random(1, 90) * 200,
-          LAeq: Math.random(1, 90) * 200,
-          LAImax: Math.random(1, 90) * 200,
+          battery: result.data?.battery,
+          LAI: result.data?.LAI,
+          LAeq: result.data?.LAeq,
+          LAImax: result.data?.LAImax,
+          // battery: Math.random(1, 90) * 200,
+          // LAI: Math.random(1, 90) * 200,
+          // LAeq: Math.random(1, 90) * 200,
+          // LAImax: Math.random(1, 90) * 200,
           latitude: 40.73061,
           longitude: -73.935242,
-          lat: 27.1739,
-          lon: 78.0421,
         };
         const currentDate = new Date();
         const currentHour = currentDate.getHours();
@@ -108,18 +106,18 @@ const handleSensorData = async (latestUplink) => {
         });
         sensorUrl = thingsBoardUrls.smallPeopleSensorUrl;
         thingsBoardPayload = {
-          // total_in: result.data.total_in,
-          // total_out: result.data.total_out,
-          // temperature: result.data.temperature,
-          // period_in: result.data.period_in,
-          // period_out: result.data.period_out,
-          // battery: result.data.battery,
-          total_in: Math.floor(Math.random() * 90 + 1),
-          total_out: Math.floor(Math.random() * 90 + 1),
-          temperature: Math.floor(Math.random() * 90 + 1),
-          period_in: Math.floor(Math.random() * 90 + 1),
-          period_out: Math.floor(Math.random() * 90 + 1),
-          battery: 99,
+          total_in: result.data?.total_in,
+          total_out: result.data?.total_out,
+          temperature: result.data?.temperature,
+          period_in: result.data?.period_in,
+          period_out: result.data?.period_out,
+          // battery: result.data?.battery,
+          // total_in: Math.floor(Math.random() * 90 + 1),
+          // total_out: Math.floor(Math.random() * 90 + 1),
+          // temperature: Math.floor(Math.random() * 90 + 1),
+          // period_in: Math.floor(Math.random() * 90 + 1),
+          // period_out: Math.floor(Math.random() * 90 + 1),
+          // battery: 99,
           latitude: 42.3601,
           longitude: -71.0589,
         };
@@ -130,9 +128,22 @@ const handleSensorData = async (latestUplink) => {
         });
         sensorUrl = thingsBoardUrls.largePeopleSensorUrl;
         thingsBoardPayload = {
-          ipso_version: result.data.ipso_version,
-          sn: result.data.sn,
-          hardware_version: result.data.hardware_version,
+          ipso_version: result.data?.ipso_version,
+          sn: result.data?.sn,
+          hardware_version: result.data?.hardware_version,
+          total_in: result.data?.total_in,
+          total_out: result.data?.total_out,
+          temperature: result.data?.temperature,
+          period_in: result.data?.period_in,
+          period_out: result.data?.period_out,
+          // battery: result.data?.battery,
+          // total_in: Math.floor(Math.random() * 90 + 1),
+          // total_out: Math.floor(Math.random() * 90 + 1),
+          // temperature: Math.floor(Math.random() * 90 + 1),
+          // period_in: Math.floor(Math.random() * 90 + 1),
+          // period_out: Math.floor(Math.random() * 90 + 1),
+          latitude: 49.3601,
+          longitude: -60.0589,
         };
         break;
       case "R718B151":

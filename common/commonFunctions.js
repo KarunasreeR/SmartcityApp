@@ -14,22 +14,6 @@ const sendToThingsBoard = async (url, data) => {
   }
 };
 
-const sendTriggerMessageTwilio = async (msg, recepientPhoneNumber) => {
-  const accountSid = process.env.TWILIO_ACCOUNT_SID;
-  const authToken = process.env.TWILIO_AUTH_TOKEN;
-  const twilioPhoneNumber = process.env.TWILIO_PHONE_NUMBER;
-
-  const client = new twilio(accountSid, authToken);
-
-  client.messages
-    .create({
-      body: msg,
-      to: recepientPhoneNumber,
-      from: twilioPhoneNumber,
-    })
-    .then((message) => console.log("Alert Message sent: " + message.sid))
-    .catch((error) => console.log("Error sending SMS: " + error));
-};
 AWS.config.update({ region: "us-east-1" });
 
 const sendTriggerMessage = async (msg, recepientPhoneNumber) => {
