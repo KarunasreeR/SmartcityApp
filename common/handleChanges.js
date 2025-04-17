@@ -67,8 +67,8 @@ const handleSensorData = async (latestUplink) => {
           // LAI: Math.random(1, 90) * 200,
           // LAeq: Math.random(1, 90) * 200,
           // LAImax: Math.random(1, 90) * 200,
-          latitude: 35.3676,
-          longitude: -120.8519,
+          latitude: 33.5775,
+          longitude: -84.3395,
         };
         const currentDate = new Date();
         const currentHour = currentDate.getHours();
@@ -118,8 +118,8 @@ const handleSensorData = async (latestUplink) => {
           // period_in: Math.floor(Math.random() * 90 + 1),
           // period_out: Math.floor(Math.random() * 90 + 1),
           // battery: 99,
-          latitude: 35.35585,
-          longitude: -120.8426,
+          latitude: 33.588,
+          longitude: -84.316,
         };
         break;
       case "Large People":
@@ -142,8 +142,8 @@ const handleSensorData = async (latestUplink) => {
           // temperature: Math.floor(Math.random() * 90 + 1),
           // period_in: Math.floor(Math.random() * 90 + 1),
           // period_out: Math.floor(Math.random() * 90 + 1),
-          latitude: 35.3441,
-          longitude: -120.8333,
+          latitude: 33.5885,
+          longitude: -84.336,
         };
         break;
       case "R718B151":
