@@ -118,8 +118,8 @@ const handleSensorData = async (latestUplink) => {
           // period_in: Math.floor(Math.random() * 90 + 1),
           // period_out: Math.floor(Math.random() * 90 + 1),
           // battery: 99,
-          latitude: 35.3551,
-          longitude: -120.848,
+          latitude: 35.35585,
+          longitude: -120.8426,
         };
         break;
       case "Large People":
