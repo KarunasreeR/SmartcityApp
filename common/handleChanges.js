@@ -160,7 +160,7 @@ const handleSensorData = async (latestUplink) => {
           temperature: parseFloat((Math.random() * 80 - 20).toFixed(2)), // -20°C to 60°C
           battery: parseFloat((Math.random() * 100).toFixed(2)), // 0% to 100%
           latitude: 33.5785,
-          longitude: -84.366,
+          longitude: -84.316,
         };
         break;
       case "R719A":
