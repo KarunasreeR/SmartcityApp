@@ -70,7 +70,7 @@ const sendAlertEmail = async (to, subject, notificationType) => {
     notificationType
   );
   const params = {
-    Source: "karuna.r@veltris.com",
+    Source: process.env.SOURCE_EMAIL,
     Destination: {
       ToAddresses: to,
     },
