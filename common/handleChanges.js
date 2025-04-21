@@ -79,7 +79,7 @@ const handleSensorData = async (latestUplink) => {
             "Alert! Possible gunshot detected. Sound level between 140-190 dB. Immediate attention required in the area.";
           // await sendTriggerMessage(msg, "+916304807441");
           await sendAlertEmail(
-            "karuna1350@gmail.com",
+            process.env.EMAIL_ADDRESSES.split(","),
             "Urgent: Possible Gunshot Detection in Morrow City 🚨",
             "gunshotDetected"
           );
@@ -147,39 +147,73 @@ const handleSensorData = async (latestUplink) => {
         };
         break;
       case "R718B151":
-        sensorUrl = thingsBoardUrls.temperatureSensorUrl;
+        sensorUrl = thingsBoardUrls.ultrasonicSensorUrl;
         thingsBoardPayload = {
-          battery: result.data.battery,
-          LAI: result.data.LAI,
-          LAeq: result.data.LAeq,
-          LAImax: result.data.LAImax,
+          // distance: result.data.distance,
+          // level: result.data.level,
+          // level_percent: result.data.level_percent,
+          // temperature: result.data.temperature,
+          // battery: result.data.battery,
+          distance: parseFloat((Math.random() * 500).toFixed(2)), // 0 to 500 cm
+          level: parseFloat((Math.random() * 100).toFixed(2)), // 0 to 100 cm
+          level_percent: parseFloat((Math.random() * 100).toFixed(2)), // 0% to 100%
+          temperature: parseFloat((Math.random() * 80 - 20).toFixed(2)), // -20°C to 60°C
+          battery: parseFloat((Math.random() * 100).toFixed(2)), // 0% to 100%
+          latitude: 33.5785,
+          longitude: -84.336,
         };
         break;
       case "R719A":
-        sensorUrl = thingsBoardUrls.SurfaceMountedParkingsensorUrl;
+        sensorUrl = thingsBoardUrls.pressureTransmitterSensorUrl;
         thingsBoardPayload = {
-          battery: result.data.battery,
-          LAI: result.data.LAI,
-          LAeq: result.data.LAeq,
-          LAImax: result.data.LAImax,
+          // pressure: result.data.pressure,
+          // status: result.data.status,
+          // battery: result.data.battery,
+          pressure: parseFloat((Math.random() * 100).toFixed(2)), // 0 to 100 PSI
+          status: ["Normal", "Warning", "Critical"][
+            Math.floor(Math.random() * 3)
+          ],
+          battery: parseFloat((Math.random() * 100).toFixed(2)),
+          latitude: 33.5899,
+          longitude: -84.366,
         };
         break;
       case "R718LB":
-        sensorUrl = thingsBoardUrls.HallEffectSensorUrl;
+        sensorUrl = thingsBoardUrls.submersibleLevelsensorUrl;
         thingsBoardPayload = {
-          battery: result.data.battery,
-          LAI: result.data.LAI,
-          LAeq: result.data.LAeq,
-          LAImax: result.data.LAImax,
+          // level: result.data.level,
+          // level_percent: result.data.level_percent,
+          // pressure: result.data.pressure,
+          // battery: result.data.battery,
+          // status: result.data.status,
+          level: parseFloat((Math.random() * 100).toFixed(2)), // 0 to 100 cm
+          level_percent: parseFloat((Math.random() * 100).toFixed(2)), // 0% to 100%
+          pressure: parseFloat((Math.random() * 100).toFixed(2)), // 0 to 100 PSI
+          battery: parseFloat((Math.random() * 100).toFixed(2)), // 0% to 100%
+          status: ["Normal", "Warning", "Critical"][
+            Math.floor(Math.random() * 3)
+          ],
+          latitude: 33.5811,
+          longitude: -84.326,
         };
         break;
       case "R712":
-        sensorUrl = thingsBoardUrls.temperatureAndHumididtySensorUrl;
+        sensorUrl = thingsBoardUrls.waterLevelSensorUrl;
         thingsBoardPayload = {
-          battery: result.data.battery,
-          LAI: result.data.LAI,
-          LAeq: result.data.LAeq,
-          LAImax: result.data.LAImax,
+          // level:result.data.level,
+          // pressure:result.data.pressure,
+          // level_percent:result.data.level_percent,
+          // status:result.data.status,
+          // battery:result.data.battery,
+          level: parseFloat((Math.random() * 100).toFixed(2)), // 0 to 100 cm
+          pressure: (100 + Math.random() * 50).toFixed(1), // 100 to 150 kPa
+          level_percent: Math.floor(Math.random() * 101), // 0 to 100%
+          status: ["Normal", "Warning", "Critical"][
+            Math.floor(Math.random() * 3)
+          ],
+          battery: parseFloat((Math.random() * 100).toFixed(2)), // 0% to 100%
+          latitude: 33.59,
+          longitude: -84.341,
         };
         break;
       default:

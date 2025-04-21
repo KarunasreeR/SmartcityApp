@@ -72,7 +72,7 @@ const sendAlertEmail = async (to, subject, notificationType) => {
   const params = {
     Source: "karuna.r@veltris.com",
     Destination: {
-      ToAddresses: [to],
+      ToAddresses: to,
     },
     Message: {
       Subject: { Data: subject },
