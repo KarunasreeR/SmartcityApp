@@ -14,7 +14,11 @@ const sendToThingsBoard = async (url, data) => {
   }
 };
 
-AWS.config.update({ region: "us-east-1" });
+AWS.config.update({
+  region: process.env.AWS_REGION,
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+});
 
 const sendTriggerMessage = async (msg, recepientPhoneNumber) => {
   const sns = new AWS.SNS();
