@@ -10,6 +10,7 @@ const { listenToDb } = require("./common/listenDBChanges");
 
 const app = express();
 const cors = require("cors");
+const { sendAlertEmail } = require("./common/commonFunctions");
 app.use(cors());
 app.use(logger("dev"));
 app.use(express.json());
@@ -30,7 +31,23 @@ app.get("/sensor/parking/live", (req, res) => {
   };
   res.json(liveData);
 });
-
+(async () => {
+  try {
+    console.log("trying...");
+    await sendAlertEmail(
+      process.env.EMAIL_ADDRESSES.split(","),
+      "Urgent: Possible Gunshot Detection in Morrow City 🚨",
+      "gunshotDetected"
+    );
+    await sendAlertEmail(
+      process.env.EMAIL_ADDRESSES.split(","),
+      "Noise Level Alert: High Sound Detected in Morrow City After 8 PM",
+      "loudNoiseAtNight"
+    );
+  } catch (e) {
+    console.log(e);
+  }
+})();
 // Sync Database & Start Listening to DB Changes
 (async () => {
   try {
