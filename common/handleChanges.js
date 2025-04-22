@@ -75,9 +75,9 @@ const handleSensorData = async (latestUplink) => {
         const currentHour = currentDate.getHours();
         let msg;
         // if (result.data.LAeq >= 140 && result.data.LAeq <= 190)
-        if (thingsBoardPayload.LAeq >= 140 && thingsBoardPayload.LAeq <= 190) {
+        if (thingsBoardPayload.LAImax >= 79) {
           msg =
-            "Alert! Possible gunshot detected. Sound level between 140-190 dB. Immediate attention required in the area.";
+            "Alert! Possible gunshot detected. Sound level between 79-190 dB. Immediate attention required in the area.";
           // await sendTriggerMessage(msg, "+916304807441");
           await sendAlertEmail(
             process.env.EMAIL_ADDRESSES.split(","),
@@ -87,14 +87,14 @@ const handleSensorData = async (latestUplink) => {
         }
         if (
           currentHour <= 20 &&
-          thingsBoardPayload.LAeq >= 90 &&
-          thingsBoardPayload.LAeq <= 120
+          thingsBoardPayload.LAImax >= 90 &&
+          thingsBoardPayload.LAImax <= 120
         ) {
           msg =
-            "Notice: Sound level detected between 90-120 dB after 8PM. The music at the District during events may be too loud. Please assess and adjust if necessary.";
+            "Notice: Sound level detected between 90-120 dB after 8PM at City of Morrow. Please assess and adjust if necessary.";
           // await sendTriggerMessage(msg, "+916304807441");
           await sendAlertEmail(
-            "karuna1350@gmail.com",
+            process.env.EMAIL_ADDRESSES.split(","),
             "Noise Level Alert: High Sound Detected in Morro City After 8 PM",
             "loudNoiseAtNight"
           );
@@ -111,7 +111,7 @@ const handleSensorData = async (latestUplink) => {
           total_out: result.data?.total_out,
           temperature:
             result.data?.temperature != null
-              ? ((result.data.temperature * 9) / 5 + 32).toFixed(1)
+              ? parseFloat(((result.data.temperature * 9) / 5 + 32).toFixed(1))
               : null,
           period_in: result.data?.period_in,
           period_out: result.data?.period_out,
@@ -125,6 +125,16 @@ const handleSensorData = async (latestUplink) => {
           latitude: 33.578525998578264,
           longitude: -84.35437308364232,
         };
+        const humidityPayload = {
+          temperature:
+            result.data?.temperature != null
+              ? parseFloat(((result.data.temperature * 9) / 5 + 32).toFixed(1))
+              : null,
+        };
+        await sendToThingsBoard(
+          thingsBoardUrls.humiditySensorUrl,
+          humidityPayload
+        );
         break;
       case "Large People":
         result = largePeopleSersorDecoder.decodeUplink({
@@ -227,25 +237,25 @@ const handleSensorData = async (latestUplink) => {
         result = JSON.parse(decodedBytes);
         sensorUrl = thingsBoardUrls.enodebUrl;
         thingsBoardPayload = {
-          small_cell_code: result?.small_cell_code,
-          mmeStatus: result?.mmeStatus,
+          eNodeB_id: result?.small_cell_code,
+          mmeStatus: result?.mmeStatus === 1 ? "UP" : "Down",
           ueCount: result?.ueCount,
-          maxtxpower: result?.maxtxpower,
-          cellStatus: result?.cellStatus,
+          // maxtxpower: result?.maxtxpower,
+          cellStatus: result?.mmeStatus === 1 ? "UP" : "Down",
           upTime: result?.upTime,
         };
         break;
-      case "cpe":
-        result = JSON.parse(decodedBytes);
-        sensorUrl = thingsBoardUrls.cpeUrl;
-        thingsBoardPayload = {
-          uptime: result?.uptime,
-          imsi: result?.imsi,
-          cellIdentity: result?.cellIdentity,
-          lteStatus: result?.lteStatus,
-          imei: result?.imei,
-        };
-        break;
+      // case "cpe":
+      //   result = JSON.parse(decodedBytes);
+      //   sensorUrl = thingsBoardUrls.cpeUrl;
+      //   thingsBoardPayload = {
+      //     uptime: result?.uptime,
+      //     imsi: result?.imsi,
+      //     cellIdentity: result?.cellIdentity,
+      //     lteStatus: result?.lteStatus,
+      //     imei: result?.imei,
+      //   };
+      //   break;
       default:
         console.error("Unknown device type:", device.device_type);
         break;

@@ -8,6 +8,7 @@ const ultrasonicSensorUrl = `${process.env.THINGSBOARD_URL}/api/v1/${process.env
 const pressureTransmitterSensorUrl = `${process.env.THINGSBOARD_URL}/api/v1/${process.env.PRESSURE_TRANSMITTER_SENSOR_ACCESS_TOKEN}/telemetry`;
 const enodebUrl = `${process.env.THINGSBOARD_URL}/api/v1/${process.env.ENODEB_ACCESS_TOKEN}/telemetry`;
 const cpeUrl = `${process.env.THINGSBOARD_URL}/api/v1/${process.env.CPE_ACCESS_TOKEN}/telemetry`;
+const humiditySensorUrl = `${process.env.THINGSBOARD_URL}/api/v1/${process.env.HUMIDITY_ACCESS_TOKEN}/telemetry`;
 module.exports = {
   parkingUrl,
   soundSensorUrl,
@@ -19,4 +20,5 @@ module.exports = {
   pressureTransmitterSensorUrl,
   enodebUrl,
   cpeUrl,
+  humiditySensorUrl,
 };
