@@ -95,7 +95,7 @@ const handleSensorData = async (latestUplink) => {
           // await sendTriggerMessage(msg, "+916304807441");
           await sendAlertEmail(
             process.env.EMAIL_ADDRESSES.split(","),
-            "Noise Level Alert: High Sound Detected in Morro City After 8 PM",
+            "Noise Level Alert: High Sound Detected in Morrow City After 8 PM",
             "loudNoiseAtNight"
           );
         }
