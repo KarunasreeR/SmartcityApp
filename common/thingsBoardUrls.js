@@ -6,6 +6,8 @@ const waterLevelSensorUrl = `${process.env.THINGSBOARD_URL}/api/v1/${process.env
 const submersibleLevelsensorUrl = `${process.env.THINGSBOARD_URL}/api/v1/${process.env.SUBMERSIBLE_SENSOR_ACCESS_TOKEN}/telemetry`;
 const ultrasonicSensorUrl = `${process.env.THINGSBOARD_URL}/api/v1/${process.env.ULTRASONIC_SENSOR_ACCESS_TOKEN}/telemetry`;
 const pressureTransmitterSensorUrl = `${process.env.THINGSBOARD_URL}/api/v1/${process.env.PRESSURE_TRANSMITTER_SENSOR_ACCESS_TOKEN}/telemetry`;
+const enodebUrl = `${process.env.THINGSBOARD_URL}/api/v1/${process.env.ENODEB_ACCESS_TOKEN}/telemetry`;
+const cpeUrl = `${process.env.THINGSBOARD_URL}/api/v1/${process.env.CPE_ACCESS_TOKEN}/telemetry`;
 module.exports = {
   parkingUrl,
   soundSensorUrl,
@@ -15,4 +17,6 @@ module.exports = {
   submersibleLevelsensorUrl,
   ultrasonicSensorUrl,
   pressureTransmitterSensorUrl,
+  enodebUrl,
+  cpeUrl,
 };
