@@ -238,10 +238,11 @@ const handleSensorData = async (latestUplink) => {
         sensorUrl = thingsBoardUrls.enodebUrl;
         thingsBoardPayload = {
           eNodeB_id: result?.small_cell_code,
-          mmeStatus: result?.mmeStatus === 1 ? "UP" : "Down",
+          mmeStatus:
+            JSON.parse(result?.mmeStatus)[0].status === "1" ? "UP" : "Down",
           ueCount: result?.ueCount,
           // maxtxpower: result?.maxtxpower,
-          cellStatus: result?.mmeStatus === 1 ? "UP" : "Down",
+          cellStatus: result?.cellStatus === "1" ? "UP" : "Down",
           upTime: result?.upTime,
         };
         break;
