@@ -67,9 +67,10 @@ const handleSensorData = async (latestUplink) => {
           // LAI: Math.random(1, 90) * 200,
           // LAeq: Math.random(1, 90) * 200,
           // LAImax: Math.random(1, 90) * 200,
-          latitude: 33.578525998578264,
-          longitude: -84.35437308364232,
+          latitude: 33.57842052739732,
+          longitude: -84.35539490685878,
         };
+
         const currentDate = new Date();
         const currentHour = currentDate.getHours();
         let msg;
