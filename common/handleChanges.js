@@ -62,8 +62,10 @@ const handleSensorData = async (latestUplink) => {
           battery: result.data?.battery,
           LAI: result.data?.LAI,
           LAeq: result.data?.LAeq,
-          LAImax: result.data?.LAImax,
-          // battery: Math.random(1, 90) * 200,
+          // LAImax: result.data?.LAImax,
+          // battery: Math.random(1, 90)
+          LAImax: 81,
+          // * 200,
           // LAI: Math.random(1, 90) * 200,
           // LAeq: Math.random(1, 90) * 200,
           // LAImax: Math.random(1, 90) * 200,
