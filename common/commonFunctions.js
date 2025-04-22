@@ -65,8 +65,8 @@ const getEmailTemplate = (recipientName, senderName, notificationType) => {
 const sendAlertEmail = async (to, subject, notificationType) => {
   const ses = new AWS.SES({ apiVersion: "2010-12-01" });
   const htmlBody = getEmailTemplate(
-    "Morro City Official Team",
-    "Morro City Sound Monitoring Team",
+    "Morrow City Official Team",
+    "Morrow City Sound Monitoring Team",
     notificationType
   );
   const params = {
