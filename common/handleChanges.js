@@ -223,6 +223,29 @@ const handleSensorData = async (latestUplink) => {
           longitude: -84.35541100011241,
         };
         break;
+      case "enodeb":
+        result = JSON.parse(decodedBytes);
+        sensorUrl = thingsBoardUrls.enodebUrl;
+        thingsBoardPayload = {
+          small_cell_code: result?.small_cell_code,
+          mmeStatus: result?.mmeStatus,
+          ueCount: result?.ueCount,
+          maxtxpower: result?.maxtxpower,
+          cellStatus: result?.cellStatus,
+          upTime: result?.upTime,
+        };
+        break;
+      case "cpe":
+        result = JSON.parse(decodedBytes);
+        sensorUrl = thingsBoardUrls.cpeUrl;
+        thingsBoardPayload = {
+          uptime: result?.uptime,
+          imsi: result?.imsi,
+          cellIdentity: result?.cellIdentity,
+          lteStatus: result?.lteStatus,
+          imei: result?.imei,
+        };
+        break;
       default:
         console.error("Unknown device type:", device.device_type);
         break;
