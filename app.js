@@ -31,7 +31,18 @@ app.get("/sensor/parking/live", (req, res) => {
   };
   res.json(liveData);
 });
-
+(async () => {
+  try {
+    console.log("trying...");
+    await sendAlertEmail(
+      process.env.EMAIL_ADDRESSES.split(","),
+      "Urgent: Possible Gunshot Detection in Morrow City 🚨",
+      "gunshotDetected"
+    );
+  } catch (e) {
+    console.log(e);
+  }
+})();
 // Sync Database & Start Listening to DB Changes
 (async () => {
   try {
