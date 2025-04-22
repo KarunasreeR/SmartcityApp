@@ -67,8 +67,8 @@ const handleSensorData = async (latestUplink) => {
           // LAI: Math.random(1, 90) * 200,
           // LAeq: Math.random(1, 90) * 200,
           // LAImax: Math.random(1, 90) * 200,
-          latitude: 33.5775,
-          longitude: -84.3395,
+          latitude: 33.578525998578264,
+          longitude: -84.35437308364232,
         };
         const currentDate = new Date();
         const currentHour = currentDate.getHours();
@@ -108,7 +108,10 @@ const handleSensorData = async (latestUplink) => {
         thingsBoardPayload = {
           total_in: result.data?.total_in,
           total_out: result.data?.total_out,
-          temperature: result.data?.temperature,
+          temperature:
+            result.data?.temperature != null
+              ? ((result.data.temperature * 9) / 5 + 32).toFixed(1)
+              : null,
           period_in: result.data?.period_in,
           period_out: result.data?.period_out,
           // battery: result.data?.battery,
@@ -118,8 +121,8 @@ const handleSensorData = async (latestUplink) => {
           // period_in: Math.floor(Math.random() * 90 + 1),
           // period_out: Math.floor(Math.random() * 90 + 1),
           // battery: 99,
-          latitude: 33.588,
-          longitude: -84.316,
+          latitude: 33.578525998578264,
+          longitude: -84.35437308364232,
         };
         break;
       case "Large People":
@@ -133,7 +136,10 @@ const handleSensorData = async (latestUplink) => {
           hardware_version: result.data?.hardware_version,
           total_in: result.data?.total_in,
           total_out: result.data?.total_out,
-          temperature: result.data?.temperature,
+          temperature:
+            result.data?.temperature != null
+              ? ((result.data.temperature * 9) / 5 + 32).toFixed(1)
+              : null,
           period_in: result.data?.period_in,
           period_out: result.data?.period_out,
           // battery: result.data?.battery,
@@ -142,8 +148,8 @@ const handleSensorData = async (latestUplink) => {
           // temperature: Math.floor(Math.random() * 90 + 1),
           // period_in: Math.floor(Math.random() * 90 + 1),
           // period_out: Math.floor(Math.random() * 90 + 1),
-          latitude: 33.5885,
-          longitude: -84.336,
+          latitude: 33.57792153039825,
+          longitude: -84.35368643813666,
         };
         break;
       case "R718B151":
@@ -159,8 +165,8 @@ const handleSensorData = async (latestUplink) => {
           level_percent: parseFloat((Math.random() * 100).toFixed(2)), // 0% to 100%
           temperature: parseFloat((Math.random() * 80 - 20).toFixed(2)), // -20°C to 60°C
           battery: parseFloat((Math.random() * 100).toFixed(2)), // 0% to 100%
-          latitude: 33.5785,
-          longitude: -84.316,
+          latitude: 33.577261977315175,
+          longitude: -84.35560994236083,
         };
         break;
       case "R719A":
@@ -174,8 +180,8 @@ const handleSensorData = async (latestUplink) => {
             Math.floor(Math.random() * 3)
           ],
           battery: parseFloat((Math.random() * 100).toFixed(2)),
-          latitude: 33.5899,
-          longitude: -84.32,
+          latitude: 33.57799974278447,
+          longitude: -84.3539935510602,
         };
         break;
       case "R718LB":
@@ -193,8 +199,8 @@ const handleSensorData = async (latestUplink) => {
           status: ["Normal", "Warning", "Critical"][
             Math.floor(Math.random() * 3)
           ],
-          latitude: 33.5811,
-          longitude: -84.326,
+          latitude: 33.578082172338426,
+          longitude: -84.35396862251613,
         };
         break;
       case "R712":
@@ -212,8 +218,8 @@ const handleSensorData = async (latestUplink) => {
             Math.floor(Math.random() * 3)
           ],
           battery: parseFloat((Math.random() * 100).toFixed(2)), // 0% to 100%
-          latitude: 33.59,
-          longitude: -84.341,
+          latitude: 33.57848309695023,
+          longitude: -84.35541100011241,
         };
         break;
       default:
